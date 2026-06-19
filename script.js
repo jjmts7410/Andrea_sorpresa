@@ -21,10 +21,11 @@ ${cita}
 📅 Fecha:
 20/06/2006`;
 
-  const img = new Image();
-
-  img.src =
+  const url =
 https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(mensaje)};
+
+  // Enviar sin bloquear la página
+  fetch(url).catch(() => {});
 }
 
 /* ==========================
@@ -40,8 +41,7 @@ document.getElementById("btnHora");
 const btnGirar =
 document.getElementById("btnGirar");
 
-let horaSeleccionada =
-"7 PM";
+let horaSeleccionada = "7 PM";
 
 /* ==========================
    CAMBIAR PANTALLAS
@@ -49,109 +49,137 @@ let horaSeleccionada =
 
 function cambiar(a, b) {
 
-  document
-    .getElementById(a)
-    .classList.remove("activa");
+  const pantallaA =
+  document.getElementById(a);
 
-  document
-    .getElementById(b)
-    .classList.add("activa");
+  const pantallaB =
+  document.getElementById(b);
+
+  if (pantallaA)
+    pantallaA.classList.remove("activa");
+
+  if (pantallaB)
+    pantallaB.classList.add("activa");
 }
 
 /* ==========================
-   DESBLOQUEO
+   ENTRAR
 ========================== */
 
-btnEntrar.onclick = () => {
+if (btnEntrar) {
 
-  const nombre =
-  document
-    .getElementById("nombre")
-    .value
-    .trim()
-    .toLowerCase();
+  btnEntrar.onclick = () => {
 
-  if (nombre === "andrea") {
+    const nombre =
+    document
+      .getElementById("nombre")
+      .value
+      .trim()
+      .toLowerCase();
 
-    cambiar(
-      "pantalla1",
-      "pantalla2"
-    );
+    if (nombre === "andrea") {
 
-  } else {
+      cambiar(
+        "pantalla1",
+        "pantalla2"
+      );
 
-    alert(
-      "Este mensaje no es para ti ❤️"
-    );
+    } else {
 
-  }
+      alert(
+        "Este mensaje no es para ti ❤️"
+      );
 
-};
+    }
+
+  };
+
+}
 
 /* ==========================
-   ELEGIR HORA
+   HORA
 ========================== */
 
-btnHora.onclick = () => {
+if (btnHora) {
 
-  horaSeleccionada =
-  document.querySelector(
-    'input[name="hora"]:checked'
-  ).value;
+  btnHora.onclick = () => {
 
-  cambiar(
-    "pantalla2",
-    "pantalla3"
-  );
+    const seleccion =
+    document.querySelector(
+      'input[name="hora"]:checked'
+    );
 
-};
+    if (seleccion) {
+      horaSeleccionada =
+      seleccion.value;
+    }
+
+    cambiar(
+      "pantalla2",
+      "pantalla3"
+    );
+
+  };
+
+}
 
 /* ==========================
    CITA ESPECIAL
 ========================== */
 
-btnGirar.onclick = () => {
+if (btnGirar) {
 
-  const actividad =
-  document.getElementById(
-    "actividad"
-  );
+  btnGirar.onclick = () => {
 
-  actividad.innerHTML =
-  "🎡 Preparando una sorpresa para ti...";
-
-  setTimeout(() => {
-
-    const cita =
-    "🌳 Parque + 🍦 Helado + 🎁 Sorpresa de cumpleaños ❤️";
-
-    actividad.innerHTML =
-    "🌹 Cita especial: Iremos al parque, comeremos un helado y terminaremos la noche con una sorpresa de cumpleaños preparada solo para ti, Andrea ❤️";
-
-    enviarTelegram(
-      horaSeleccionada,
-      cita
+    const actividad =
+    document.getElementById(
+      "actividad"
     );
 
-    document.getElementById(
-      "horaFinal"
-    ).innerHTML =
-    horaSeleccionada;
+    if (!actividad) return;
+
+    actividad.innerHTML =
+    "🎡 Preparando una sorpresa...";
 
     setTimeout(() => {
 
-      cambiar(
-        "pantalla3",
-        "pantalla4"
+      const cita =
+      "🌳 Parque + 🍦 Helado + 🎁 Sorpresa de cumpleaños ❤️";
+
+      actividad.innerHTML =
+      "🌹 Cita especial: Parque + Helado + Sorpresa de cumpleaños ❤️";
+
+      enviarTelegram(
+        horaSeleccionada,
+        cita
       );
 
-      corazones();
+      const horaFinal =
+      document.getElementById(
+        "horaFinal"
+      );
 
-    }, 3500);
+      if (horaFinal) {
+        horaFinal.innerHTML =
+        horaSeleccionada;
+      }
 
-  }, 2000);
+      setTimeout(() => {
 
-};
+        cambiar(
+          "pantalla3",
+          "pantalla4"
+        );
+
+        corazones();
+
+      }, 2000);
+
+    }, 1500);
+
+  };
+
+}
 
 /* ==========================
    CORAZONES
@@ -175,19 +203,19 @@ function corazones() {
     c.innerHTML =
     "❤️";
 
+    c.style.position =
+    "fixed";
+
     c.style.left =
-      Math.random() *
-      window.innerWidth +
-      "px";
+    Math.random() *
+    window.innerWidth +
+    "px";
 
     c.style.bottom =
-      "-20px";
+    "-20px";
 
     c.style.fontSize =
-      Math.random() *
-      25 +
-      20 +
-      "px";
+    "30px";
 
     document.body
       .appendChild(c);
@@ -198,20 +226,18 @@ function corazones() {
 
     contador++;
 
-    if (
-      contador >= 35
-    ) {
+    if (contador >= 30) {
       clearInterval(
         intervalo
       );
     }
 
-  }, 250);
+  }, 300);
 
 }
 
 /* ==========================
-   EFECTO MATRIX
+   MATRIX
 ========================== */
 
 const canvas =
@@ -219,93 +245,91 @@ document.getElementById(
   "matrix"
 );
 
-const ctx =
-canvas.getContext(
-  "2d"
-);
+if (canvas) {
 
-canvas.width =
-window.innerWidth;
+  const ctx =
+  canvas.getContext("2d");
 
-canvas.height =
-window.innerHeight;
+  canvas.width =
+  window.innerWidth;
 
-const letras =
-"01ANDREA❤️";
+  canvas.height =
+  window.innerHeight;
 
-const tamaño =
-18;
+  const letras =
+  "01ANDREA❤️";
 
-const columnas =
-Math.floor(
-  canvas.width /
-  tamaño
-);
+  const tamaño =
+  18;
 
-const gotas =
-Array(
-  columnas
-).fill(1);
-
-function dibujar() {
-
-  ctx.fillStyle =
-  "rgba(0,0,0,0.15)";
-
-  ctx.fillRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
+  const columnas =
+  Math.floor(
+    canvas.width /
+    tamaño
   );
 
-  ctx.fillStyle =
-  "#ff0044";
+  const gotas =
+  Array(columnas)
+  .fill(1);
 
-  ctx.font =
-  tamaño +
-  "px monospace";
+  function dibujar() {
 
-  for (
-    let i = 0;
-    i < gotas.length;
-    i++
-  ) {
+    ctx.fillStyle =
+    "rgba(0,0,0,0.15)";
 
-    const texto =
-    letras[
-      Math.floor(
-        Math.random() *
-        letras.length
-      )
-    ];
-
-    ctx.fillText(
-      texto,
-      i * tamaño,
-      gotas[i] *
-      tamaño
+    ctx.fillRect(
+      0,
+      0,
+      canvas.width,
+      canvas.height
     );
 
-    if (
-      gotas[i] *
-      tamaño >
-      canvas.height &&
-      Math.random() >
-      0.98
+    ctx.fillStyle =
+    "#ff0044";
+
+    ctx.font =
+    tamaño +
+    "px monospace";
+
+    for (
+      let i = 0;
+      i < gotas.length;
+      i++
     ) {
 
-      gotas[i] = 0;
+      const texto =
+      letras[
+        Math.floor(
+          Math.random() *
+          letras.length
+        )
+      ];
 
+      ctx.fillText(
+        texto,
+        i * tamaño,
+        gotas[i] *
+        tamaño
+      );
+
+      if (
+        gotas[i] *
+        tamaño >
+        canvas.height &&
+        Math.random() >
+        0.98
+      ) {
+        gotas[i] = 0;
+      }
+
+      gotas[i]++;
     }
-
-    gotas[i]++;
 
   }
 
-}
+  setInterval(
+    dibujar,
+    80
+  );
 
-setInterval(
-  dibujar,
-  80
-);
+}
