@@ -1,7 +1,7 @@
 /* ==========================
    TELEGRAM
 ========================== */
-
+alert("JS cargado");
 const TOKEN =
 "8874726500:AAEdZUIso8i5FxuGHvB3c69HqG81Tv-ufRg";
 
