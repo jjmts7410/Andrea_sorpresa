@@ -202,5 +202,5 @@ function dibujar(){
 
 setInterval(
   dibujar,
-  40
+  80
 );
