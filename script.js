@@ -21,19 +21,10 @@ ${cita}
 📅 Fecha:
 20/06/2006`;
 
-  fetch(
-    https://api.telegram.org/bot${TOKEN}/sendMessage,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        chat_id: CHAT_ID,
-        text: mensaje
-      })
-    }
-  );
+  const img = new Image();
+
+  img.src =
+https://api.telegram.org/bot${TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(mensaje)};
 }
 
 /* ==========================
@@ -49,7 +40,8 @@ document.getElementById("btnHora");
 const btnGirar =
 document.getElementById("btnGirar");
 
-let horaSeleccionada = "7 PM";
+let horaSeleccionada =
+"7 PM";
 
 /* ==========================
    CAMBIAR PANTALLAS
@@ -67,7 +59,7 @@ function cambiar(a, b) {
 }
 
 /* ==========================
-   ENTRAR
+   DESBLOQUEO
 ========================== */
 
 btnEntrar.onclick = () => {
@@ -131,7 +123,7 @@ btnGirar.onclick = () => {
   setTimeout(() => {
 
     const cita =
-    "🌹 Parque + Helado + Sorpresa de cumpleaños ❤️";
+    "🌳 Parque + 🍦 Helado + 🎁 Sorpresa de cumpleaños ❤️";
 
     actividad.innerHTML =
     "🌹 Cita especial: Iremos al parque, comeremos un helado y terminaremos la noche con una sorpresa de cumpleaños preparada solo para ti, Andrea ❤️";
@@ -155,9 +147,9 @@ btnGirar.onclick = () => {
 
       corazones();
 
-    }, 4000);
+    }, 3500);
 
-  }, 2500);
+  }, 2000);
 
 };
 
@@ -167,6 +159,9 @@ btnGirar.onclick = () => {
 
 function corazones() {
 
+  let contador = 0;
+
+  const intervalo =
   setInterval(() => {
 
     const c =
@@ -181,17 +176,18 @@ function corazones() {
     "❤️";
 
     c.style.left =
-    Math.random() *
-    window.innerWidth +
-    "px";
+      Math.random() *
+      window.innerWidth +
+      "px";
 
     c.style.bottom =
-    "-20px";
+      "-20px";
 
     c.style.fontSize =
-    Math.random() * 30 +
-    20 +
-    "px";
+      Math.random() *
+      25 +
+      20 +
+      "px";
 
     document.body
       .appendChild(c);
@@ -200,7 +196,17 @@ function corazones() {
       c.remove();
     }, 4000);
 
-  }, 300);
+    contador++;
+
+    if (
+      contador >= 35
+    ) {
+      clearInterval(
+        intervalo
+      );
+    }
+
+  }, 250);
 
 }
 
@@ -214,7 +220,9 @@ document.getElementById(
 );
 
 const ctx =
-canvas.getContext("2d");
+canvas.getContext(
+  "2d"
+);
 
 canvas.width =
 window.innerWidth;
@@ -226,21 +234,23 @@ const letras =
 "01ANDREA❤️";
 
 const tamaño =
-16;
+18;
 
 const columnas =
-canvas.width /
-tamaño;
+Math.floor(
+  canvas.width /
+  tamaño
+);
 
 const gotas =
 Array(
-  Math.floor(columnas)
+  columnas
 ).fill(1);
 
 function dibujar() {
 
   ctx.fillStyle =
-  "rgba(0,0,0,.08)";
+  "rgba(0,0,0,0.15)";
 
   ctx.fillRect(
     0,
@@ -273,7 +283,8 @@ function dibujar() {
     ctx.fillText(
       texto,
       i * tamaño,
-      gotas[i] * tamaño
+      gotas[i] *
+      tamaño
     );
 
     if (
@@ -281,9 +292,11 @@ function dibujar() {
       tamaño >
       canvas.height &&
       Math.random() >
-      0.975
+      0.98
     ) {
+
       gotas[i] = 0;
+
     }
 
     gotas[i]++;
@@ -294,5 +307,5 @@ function dibujar() {
 
 setInterval(
   dibujar,
-  40
+  80
 );
