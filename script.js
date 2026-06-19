@@ -9,28 +9,28 @@ document.getElementById("btnGirar");
 
 let horaSeleccionada = "7 PM";
 
-function cambiar(a, b) {
+function cambiar(a,b){
   document.getElementById(a)
-    .classList.remove("activa");
+  .classList.remove("activa");
 
   document.getElementById(b)
-    .classList.add("activa");
+  .classList.add("activa");
 }
 
 btnEntrar.onclick = () => {
 
   const nombre =
-    document.getElementById("nombre")
-      .value
-      .trim()
-      .toLowerCase();
+  document.getElementById("nombre")
+  .value
+  .trim()
+  .toLowerCase();
 
-  if (nombre === "andrea") {
+  if(nombre === "andrea"){
     cambiar(
       "pantalla1",
       "pantalla2"
     );
-  } else {
+  }else{
     alert(
       "Este mensaje no es para ti ❤️"
     );
@@ -40,9 +40,9 @@ btnEntrar.onclick = () => {
 btnHora.onclick = () => {
 
   horaSeleccionada =
-    document.querySelector(
-      'input[name="hora"]:checked'
-    ).value;
+  document.querySelector(
+    'input[name="hora"]:checked'
+  ).value;
 
   cambiar(
     "pantalla2",
@@ -50,27 +50,25 @@ btnHora.onclick = () => {
   );
 };
 
-/* RUEDA CON UNA SOLA CITA ESPECIAL */
-
 btnGirar.onclick = () => {
 
   const actividad =
-    document.getElementById(
-      "actividad"
-    );
+  document.getElementById(
+    "actividad"
+  );
 
   actividad.innerHTML =
-    "🎡 Preparando una sorpresa para ti...";
+  "🎡 Preparando una sorpresa...";
 
   setTimeout(() => {
 
     actividad.innerHTML =
-      "🌹 Cita especial: Iremos al parque, comeremos un helado y terminaremos la noche con una sorpresa de cumpleaños preparada solo para ti, Andrea ❤️";
+    "🌹 Cita especial: Iremos al parque, comeremos un helado y terminaremos la noche con una sorpresa de cumpleaños preparada solo para ti, Andrea ❤️";
 
     document.getElementById(
       "horaFinal"
     ).innerHTML =
-      horaSeleccionada;
+    horaSeleccionada;
 
     setTimeout(() => {
 
@@ -81,46 +79,44 @@ btnGirar.onclick = () => {
 
       corazones();
 
-    }, 4000);
+    },2000);
 
-  }, 2500);
+  },1500);
 
 };
 
-function corazones() {
+function corazones(){
 
   setInterval(() => {
 
     const c =
-      document.createElement("div");
+    document.createElement("div");
 
     c.className =
-      "corazon";
+    "corazon";
 
-    c.innerHTML =
-      "❤️";
+    c.innerHTML = "❤️";
 
     c.style.left =
-      Math.random() *
-      window.innerWidth +
-      "px";
+    Math.random() *
+    window.innerWidth +
+    "px";
 
     c.style.bottom =
-      "-20px";
+    "-20px";
 
     c.style.fontSize =
-      Math.random() * 30 +
-      20 + "px";
+    Math.random() * 30 +
+    20 + "px";
 
     document.body
-      .appendChild(c);
+    .appendChild(c);
 
     setTimeout(() => {
       c.remove();
-    }, 4000);
+    },4000);
 
-  }, 300);
-
+  },300);
 }
 
 /* EFECTO MATRIX */
@@ -140,23 +136,23 @@ canvas.height =
 window.innerHeight;
 
 const letras =
-  "01ANDREA❤️";
+"01ANDREA❤️";
 
 const tamaño = 16;
 
 const columnas =
-  canvas.width /
-  tamaño;
+canvas.width /
+tamaño;
 
 const gotas =
-  Array(
-    Math.floor(columnas)
-  ).fill(1);
+Array(
+  Math.floor(columnas)
+).fill(1);
 
-function dibujar() {
+function dibujar(){
 
   ctx.fillStyle =
-    "rgba(0,0,0,.08)";
+  "rgba(0,0,0,.08)";
 
   ctx.fillRect(
     0,
@@ -166,38 +162,38 @@ function dibujar() {
   );
 
   ctx.fillStyle =
-    "#ff0044";
+  "#ff0044";
 
   ctx.font =
-    tamaño +
-    "px monospace";
+  tamaño +
+  "px monospace";
 
-  for (
-    let i = 0;
-    i < gotas.length;
+  for(
+    let i=0;
+    i<gotas.length;
     i++
-  ) {
+  ){
 
     const texto =
-      letras[
-        Math.floor(
-          Math.random()
-          * letras.length
-        )
-      ];
+    letras[
+      Math.floor(
+        Math.random()
+        * letras.length
+      )
+    ];
 
     ctx.fillText(
       texto,
-      i * tamaño,
-      gotas[i] * tamaño
+      i*tamaño,
+      gotas[i]*tamaño
     );
 
-    if (
-      gotas[i] * tamaño >
+    if(
+      gotas[i]*tamaño >
       canvas.height &&
       Math.random() > .975
-    ) {
-      gotas[i] = 0;
+    ){
+      gotas[i]=0;
     }
 
     gotas[i]++;
