@@ -9,28 +9,28 @@ document.getElementById("btnGirar");
 
 let horaSeleccionada = "7 PM";
 
-function cambiar(a,b){
+function cambiar(a, b) {
   document.getElementById(a)
-  .classList.remove("activa");
+    .classList.remove("activa");
 
   document.getElementById(b)
-  .classList.add("activa");
+    .classList.add("activa");
 }
 
 btnEntrar.onclick = () => {
 
   const nombre =
-  document.getElementById("nombre")
-  .value
-  .trim()
-  .toLowerCase();
+    document.getElementById("nombre")
+      .value
+      .trim()
+      .toLowerCase();
 
-  if(nombre === "andrea"){
+  if (nombre === "andrea") {
     cambiar(
       "pantalla1",
       "pantalla2"
     );
-  }else{
+  } else {
     alert(
       "Este mensaje no es para ti ❤️"
     );
@@ -40,9 +40,9 @@ btnEntrar.onclick = () => {
 btnHora.onclick = () => {
 
   horaSeleccionada =
-  document.querySelector(
-    'input[name="hora"]:checked'
-  ).value;
+    document.querySelector(
+      'input[name="hora"]:checked'
+    ).value;
 
   cambiar(
     "pantalla2",
@@ -50,93 +50,77 @@ btnHora.onclick = () => {
   );
 };
 
-const actividades = [
-  "🍿 Cine",
-  "🎨 Pintura",
-  "🌳 Parque",
-  "🍔 Cena",
-  "🍦 Helado",
-  "🏍️ Paseo en moto"
-];
+/* RUEDA CON UNA SOLA CITA ESPECIAL */
 
 btnGirar.onclick = () => {
 
   const actividad =
-  document.getElementById(
-    "actividad"
-  );
+    document.getElementById(
+      "actividad"
+    );
 
-  let contador = 0;
+  actividad.innerHTML =
+    "🎡 Preparando una sorpresa para ti...";
 
-  const giro =
-  setInterval(() => {
+  setTimeout(() => {
 
     actividad.innerHTML =
-    actividades[
-      Math.floor(
-        Math.random()
-        * actividades.length
-      )
-    ];
+      "🌹 Cita especial: Iremos al parque, comeremos un helado y terminaremos la noche con una sorpresa de cumpleaños preparada solo para ti, Andrea ❤️";
 
-    contador++;
-
-    if(contador > 25){
-
-      clearInterval(giro);
-
-      document.getElementById(
-        "horaFinal"
-      ).innerHTML =
+    document.getElementById(
+      "horaFinal"
+    ).innerHTML =
       horaSeleccionada;
 
-      setTimeout(() => {
+    setTimeout(() => {
 
-        cambiar(
-          "pantalla3",
-          "pantalla4"
-        );
+      cambiar(
+        "pantalla3",
+        "pantalla4"
+      );
 
-        corazones();
+      corazones();
 
-      },1200);
-    }
+    }, 4000);
 
-  },100);
+  }, 2500);
+
 };
 
-function corazones(){
+function corazones() {
 
   setInterval(() => {
 
     const c =
-    document.createElement("div");
+      document.createElement("div");
 
     c.className =
-    "corazon";
+      "corazon";
 
-    c.innerHTML = "❤️";
+    c.innerHTML =
+      "❤️";
 
     c.style.left =
-    Math.random() *
-    window.innerWidth +
-    "px";
+      Math.random() *
+      window.innerWidth +
+      "px";
 
     c.style.bottom =
-    "-20px";
+      "-20px";
 
     c.style.fontSize =
-    Math.random() * 30 +
-    20 + "px";
+      Math.random() * 30 +
+      20 + "px";
 
     document.body
-    .appendChild(c);
+      .appendChild(c);
 
     setTimeout(() => {
       c.remove();
-    },4000);
+    }, 4000);
 
-  },300);
+  }, 300);
+
 }
 
 /* EFECTO MATRIX */
@@ -156,23 +140,23 @@ canvas.height =
 window.innerHeight;
 
 const letras =
-"01ANDREA❤️";
+  "01ANDREA❤️";
 
 const tamaño = 16;
 
 const columnas =
-canvas.width /
-tamaño;
+  canvas.width /
+  tamaño;
 
 const gotas =
-Array(
-  Math.floor(columnas)
-).fill(1);
+  Array(
+    Math.floor(columnas)
+  ).fill(1);
 
-function dibujar(){
+function dibujar() {
 
   ctx.fillStyle =
-  "rgba(0,0,0,.08)";
+    "rgba(0,0,0,.08)";
 
   ctx.fillRect(
     0,
@@ -182,38 +166,38 @@ function dibujar(){
   );
 
   ctx.fillStyle =
-  "#ff0044";
+    "#ff0044";
 
   ctx.font =
-  tamaño +
-  "px monospace";
+    tamaño +
+    "px monospace";
 
-  for(
-    let i=0;
-    i<gotas.length;
+  for (
+    let i = 0;
+    i < gotas.length;
     i++
-  ){
+  ) {
 
     const texto =
-    letras[
-      Math.floor(
-        Math.random()
-        * letras.length
-      )
-    ];
+      letras[
+        Math.floor(
+          Math.random()
+          * letras.length
+        )
+      ];
 
     ctx.fillText(
       texto,
-      i*tamaño,
-      gotas[i]*tamaño
+      i * tamaño,
+      gotas[i] * tamaño
     );
 
-    if(
-      gotas[i]*tamaño >
+    if (
+      gotas[i] * tamaño >
       canvas.height &&
       Math.random() > .975
-    ){
-      gotas[i]=0;
+    ) {
+      gotas[i] = 0;
     }
 
     gotas[i]++;
