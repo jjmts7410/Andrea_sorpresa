@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Andrea ❤️</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div class="contenedor">
+
+  <!-- Pantalla 1 -->
+  <section id="pantalla1" class="tarjeta activa">
+
+    <div class="candado">🔒</div>
+
+    <h2>Esto se desbloquea con tu nombre ❤️</h2>
+
+    <input
+      id="nombre"
+      type="text"
+      placeholder="Escribe tu nombre"
+    >
+
+    <p class="pequeño">
+      Este mensaje es para ti.
+    </p>
+
+    <button id="btnEntrar">
+      Entrar
+    </button>
+
+  </section>
+
+  <!-- Pantalla 2 -->
+  <section id="pantalla2" class="tarjeta">
+
+    <h2>
+      ¿A qué hora puedes estar lista? ✨
+    </h2>
+
+    <div class="horas">
+
+      <label>
+        <input type="radio" name="hora" value="5 PM">
+        5 PM
+      </label>
+
+      <label>
+        <input type="radio" name="hora" value="6 PM">
+        6 PM
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="hora"
+          value="7 PM"
+          checked
+        >
+        7 PM
+      </label>
+
+      <label>
+        <input type="radio" name="hora" value="8 PM">
+        8 PM
+      </label>
+
+      <label>
+        <input type="radio" name="hora" value="9 PM">
+        9 PM
+      </label>
+
+    </div>
+
+    <button id="btnHora">
+      Confirmar hora
+    </button>
+
+  </section>
+
+  <!-- Pantalla 3 -->
+  <section id="pantalla3" class="tarjeta">
+
+    <h2>
+      Feliz cumpleaños Andrea 🎂
+    </h2>
+
+    <h3>
+      Y haremos...
+    </h3>
+
+    <div id="ruleta">
+      <div id="actividad">
+        Presiona Girar
+      </div>
+    </div>
+
+    <button id="btnGirar">
+      Girar
+    </button>
+
+  </section>
+
+  <!-- Pantalla Final -->
+  <section id="pantalla4" class="tarjeta">
+
+    <h2>
+      Ya eres hermosa,
+      pero estate lista a las
+      <span id="horaFinal"></span> ❤️
+    </h2>
+
+    <p>
+      📍 Dirección:
+      Tu casa (pasaré por ti 😌)
+    </p>
+
+    <img
+      src="assets/andrea.jpg"
+      class="foto"
+    >
+
+    <div class="contador">
+      ❤️ 391 días juntos ❤️
+    </div>
+
+    <div class="carta">
+
+Andrea,
+
+Gracias por estos 391 días.
+
+Te has convertido en una de las personas más importantes de mi vida.
+
+Espero seguir creando recuerdos contigo, riendo juntos y celebrando muchos cumpleaños más.
+
+❤️ Feliz cumpleaños ❤️
+
+20/06/2006
+
+    </div>
+
+  </section>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
