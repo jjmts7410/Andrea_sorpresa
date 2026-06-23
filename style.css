@@ -26,21 +26,20 @@ body{
 }
 
 .tarjeta{
-  width:430px;
-  max-width:90%;
-  background:rgba(20,20,20,.85);
-  backdrop-filter:blur(15px);
-  border:1px solid rgba(255,0,70,.5);
+  width: 500px;
+  max-width: 90%;
+  min-height: 750px;
+  background: rgba(20,20,20,.92);
+  backdrop-filter: blur(15px);
+  border: 2px solid rgba(255,0,70,.7);
   box-shadow:
-    0 0 20px rgba(255,0,70,.5),
-    0 0 60px rgba(255,0,70,.2);
+    0 0 20px rgba(255,0,70,.6),
+    0 0 60px rgba(255,0,70,.3);
 
-  border-radius:20px;
-  padding:40px;
-  text-align:center;
-
-  display:none;
-  animation:entrada .10s;
+  border-radius: 30px;
+  padding: 35px;
+  text-align: center;
+  display: none;
 }
 
 .activa{
@@ -114,22 +113,25 @@ label{
 }
 
 .foto{
-  width:220px;
-  margin-top:20px;
-  border-radius:20px;
+  width: 240px;
+  border-radius: 25px;
+  margin-top: 25px;
+  border: 2px solid #ff0044;
+  box-shadow: 0 0 25px #ff0044;
 }
-
 .contador{
   margin-top:20px;
   font-size:22px;
 }
 
 .carta{
-  margin-top:25px;
-  line-height:1.8;
-  white-space:pre-line;
+  margin: 25px auto;
+  width: 85%;
+  line-height: 1.7;
+  font-size: 22px;
+  text-align: center;
+  white-space: pre-line;
 }
-
 .corazon{
   position:absolute;
   animation:subir 4s linear;
