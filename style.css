@@ -79,3 +79,33 @@ h3{
   font-size: 28px;
   margin-top: 10px;
 }
+@media (max-width: 600px){
+
+  .tarjeta{
+    width: 95%;
+    min-height: auto;
+    padding: 25px;
+  }
+
+  .carta{
+    width: 95%;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .contador{
+    font-size: 26px;
+  }
+
+  h2{
+    font-size: 28px;
+  }
+
+  p{
+    font-size: 18px;
+  }
+
+  .foto{
+    width: 180px;
+  }
+}
