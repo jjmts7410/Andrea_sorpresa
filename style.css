@@ -40,7 +40,7 @@ body{
   text-align:center;
 
   display:none;
-  animation:entrada .8s;
+  animation:entrada .10s;
 }
 
 .activa{
