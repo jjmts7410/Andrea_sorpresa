@@ -1,23 +1,17 @@
 .tarjeta{
-  width: 500px;
-  max-width: 90%;
-  min-height: 750px;
-
-  background: rgba(20,20,20,.92);
-  backdrop-filter: blur(15px);
-
-  border: 2px solid rgba(255,0,70,.7);
-
+  width:430px;
+  max-width:90%;
+  background:rgba(20,20,20,.85);
+  backdrop-filter:blur(15px);
+  border:1px solid rgba(255,0,70,.5);
   box-shadow:
-    0 0 20px rgba(255,0,70,.6),
-    0 0 60px rgba(255,0,70,.3);
-
-  border-radius: 30px;
-  padding: 35px;
-  text-align: center;
-
-  display: none;
-  animation: entrada .8s;
+    0 0 20px rgba(255,0,70,.5),
+    0 0 60px rgba(255,0,70,.2);
+  border-radius:20px;
+  padding:40px;
+  text-align:center;
+  display:none;
+  animation:entrada .8s;
 }
 
 .activa{
