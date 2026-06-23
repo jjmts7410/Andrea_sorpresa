@@ -1,37 +1,13 @@
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Consolas, monospace;
-}
-
-body{
-  background:#050505;
-  overflow:hidden;
-  color:white;
-}
-
-#matrix{
-  position:fixed;
-  width:100%;
-  height:100%;
-  z-index:-1;
-}
-
-.contenedor{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
 .tarjeta{
   width: 500px;
   max-width: 90%;
   min-height: 750px;
+
   background: rgba(20,20,20,.92);
   backdrop-filter: blur(15px);
+
   border: 2px solid rgba(255,0,70,.7);
+
   box-shadow:
     0 0 20px rgba(255,0,70,.6),
     0 0 60px rgba(255,0,70,.3);
@@ -39,111 +15,67 @@ body{
   border-radius: 30px;
   padding: 35px;
   text-align: center;
+
   display: none;
+  animation: entrada .8s;
 }
 
 .activa{
-  display:block;
-}
-
-@keyframes entrada{
-  from{
-    opacity:0;
-    transform:translateY(30px);
-  }
-  to{
-    opacity:1;
-    transform:translateY(0);
-  }
-}
-
-.candado{
-  font-size:45px;
-  margin-bottom:20px;
-}
-
-input[type=text]{
-  width:100%;
-  padding:14px;
-  margin-top:20px;
-  background:#111;
-  color:white;
-  border:1px solid #ff0044;
-  border-radius:12px;
-}
-
-button{
-  margin-top:30px;
-  padding:14px 25px;
-  border:none;
-  border-radius:12px;
-  background:#ff0044;
-  color:white;
-  cursor:pointer;
-}
-
-.horas{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  text-align:left;
-}
-
-label{
-  background:#111;
-  padding:15px;
-  border-radius:12px;
-}
-
-#ruleta{
-  width:320px;
-  height:320px;
-  border-radius:50%;
-  border:5px solid #ff0044;
-  margin:30px auto;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  box-shadow:0 0 30px #ff0044;
-}
-
-#actividad{
-  font-size:28px;
-  text-align:center;
+  display: block;
 }
 
 .foto{
-  width: 240px;
-  border-radius: 25px;
-  margin-top: 25px;
+  width: 220px;
+  max-width: 80%;
+  margin-top: 20px;
+
+  border-radius: 20px;
   border: 2px solid #ff0044;
-  box-shadow: 0 0 25px #ff0044;
+
+  box-shadow:
+    0 0 20px #ff0044,
+    0 0 40px rgba(255,0,70,.5);
 }
+
 .contador{
-  margin-top:20px;
-  font-size:22px;
+  margin-top: 25px;
+  font-size: 32px;
+  font-weight: bold;
+
+  color: white;
+  text-shadow:
+    0 0 10px #ff0044,
+    0 0 20px #ff0044;
 }
 
 .carta{
-  margin: 25px auto;
   width: 85%;
-  line-height: 1.7;
+  margin: 30px auto 0;
+
   font-size: 22px;
+  line-height: 1.8;
   text-align: center;
   white-space: pre-line;
 }
-.corazon{
-  position:absolute;
-  animation:subir 4s linear;
+
+.linea{
+  margin: 25px 0;
+  font-size: 20px;
+  color: #ff3366;
+  text-shadow: 0 0 10px #ff0044;
 }
 
-@keyframes subir{
-  from{
-    transform:translateY(0);
-    opacity:1;
-  }
-  to{
-    transform:translateY(-700px);
-    opacity:0;
-  }
+p{
+  margin-top: 15px;
+  font-size: 22px;
+}
+
+h2{
+  font-size: 38px;
+  margin-bottom: 20px;
+}
+
+h3{
+  font-size: 28px;
+  margin-top: 10px;
 }
