@@ -7,13 +7,14 @@
   box-shadow:
     0 0 20px rgba(255,0,70,.5),
     0 0 60px rgba(255,0,70,.2);
+
   border-radius:20px;
   padding:40px;
   text-align:center;
+
   display:none;
   animation:entrada .8s;
 }
-
 .activa{
   display: block;
 }
@@ -102,4 +103,108 @@ h3{
   .foto{
     width: 180px;
   }
+}
+/* ==========================
+   PANTALLA FINAL PREMIUM
+========================== */
+
+.tarjeta-final{
+  width:470px;
+  max-width:92%;
+  min-height:650px;
+
+  border:2px solid rgba(255,0,70,.7);
+
+  box-shadow:
+    0 0 25px rgba(255,0,70,.7),
+    0 0 80px rgba(255,0,70,.3);
+
+  border-radius:30px;
+
+  padding:35px;
+}
+
+.tarjeta-final h2{
+  font-size:30px;
+  line-height:1.5;
+}
+
+.tarjeta-final p{
+  font-size:20px;
+  line-height:1.6;
+}
+
+.tarjeta-final .foto{
+  width:220px;
+  margin-top:20px;
+
+  border-radius:20px;
+  border:2px solid #ff0044;
+
+  box-shadow:
+    0 0 20px #ff0044,
+    0 0 40px rgba(255,0,70,.5);
+}
+
+.tarjeta-final .contador{
+  margin-top:20px;
+  font-size:28px;
+  font-weight:bold;
+
+  text-shadow:
+    0 0 10px #ff0044,
+    0 0 20px #ff0044;
+}
+
+.tarjeta-final .carta{
+  width:90%;
+  margin:25px auto;
+
+  font-size:20px;
+  line-height:1.8;
+
+  text-align:center;
+  white-space:pre-line;
+}
+
+.linea{
+  margin:25px 0;
+
+  color:#ff3366;
+  font-size:20px;
+
+  text-shadow:
+    0 0 10px #ff0044;
+}
+
+/* CELULAR */
+
+@media(max-width:600px){
+
+  .tarjeta-final{
+    width:95%;
+    min-height:auto;
+    padding:25px;
+  }
+
+  .tarjeta-final h2{
+    font-size:24px;
+  }
+
+  .tarjeta-final p{
+    font-size:18px;
+  }
+
+  .tarjeta-final .foto{
+    width:180px;
+  }
+
+  .tarjeta-final .contador{
+    font-size:24px;
+  }
+
+  .tarjeta-final .carta{
+    font-size:17px;
+  }
+
 }
