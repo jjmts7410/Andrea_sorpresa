@@ -63,7 +63,7 @@ btnGirar.onclick = () => {
   setTimeout(() => {
 
     actividad.innerHTML =
-    "🌹 Cita especial: Iremos al parque, comeremos un helado y terminaremos la noche con una sorpresa de cumpleaños preparada solo para ti, Andrea ❤️";
+    "🌹 Cita Especial ❤️";
 
     document.getElementById(
       "horaFinal"
