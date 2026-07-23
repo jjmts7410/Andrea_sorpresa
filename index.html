@@ -1,426 +1,154 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>acceso_restringido.exe</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#04060a;
-    --panel:#0b0f16;
-    --panel-2:#0e131c;
-    --line:#1c2430;
-    --text:#dbe7ef;
-    --muted:#5c6b7a;
-    --red:#ff4d4d;
-    --red-dim:#7a2323;
-    --gold:#ffb545;
-    --gold-dim:#7a5620;
-  }
-  *{box-sizing:border-box;}
-  html,body{height:100%;}
-  body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
-    font-family:'JetBrains Mono', monospace;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    min-height:100vh;
-    overflow:hidden;
-    padding:20px;
-  }
-  canvas#rain{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    z-index:0;
-    opacity:0.55;
-  }
-  .stage{
-    position:relative;
-    z-index:1;
-    width:100%;
-    max-width:480px;
-  }
-  .window{
-    background:var(--panel);
-    border:1px solid var(--line);
-    border-radius:10px;
-    box-shadow:0 30px 80px rgba(0,0,0,0.6);
-    overflow:hidden;
-  }
-  .titlebar{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    padding:10px 14px;
-    background:var(--panel-2);
-    border-bottom:1px solid var(--line);
-  }
-  .dot{width:10px;height:10px;border-radius:50%;}
-  .dot.r{background:#ff5f57;}
-  .dot.y{background:#febc2e;}
-  .dot.g{background:#28c840;}
-  .url{
-    margin-left:8px;
-    font-size:11px;
-    color:var(--muted);
-    letter-spacing:0.3px;
-    overflow:hidden;
-    white-space:nowrap;
-    text-overflow:ellipsis;
-  }
-  .screen{
-    display:none;
-    padding:38px 26px 30px;
-    text-align:center;
-    animation:fade .5s ease;
-  }
-  .screen.active{display:block;}
-  @keyframes fade{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
-
-  .lock-icon{
-    width:52px;height:52px;
-    margin:0 auto 18px;
-    border:2px solid var(--red);
-    border-radius:10px;
-    display:flex;align-items:center;justify-content:center;
-    color:var(--red);
-    box-shadow:0 0 24px rgba(255,77,77,0.35);
-    font-size:24px;
-  }
-  h1{
-    font-size:17px;
-    font-weight:700;
-    margin:0 0 6px;
-    color:var(--text);
-    letter-spacing:0.2px;
-  }
-  p.sub{
-    color:var(--muted);
-    font-size:12.5px;
-    margin:0 0 22px;
-    line-height:1.6;
-  }
-  .accent{color:var(--red);}
-  .accent-gold{color:var(--gold);}
-
-  input[type="text"], select{
-    width:100%;
-    background:#05070b;
-    border:1px solid var(--red-dim);
-    color:var(--text);
-    font-family:inherit;
-    font-size:14px;
-    padding:12px 14px;
-    border-radius:6px;
-    outline:none;
-    text-align:center;
-    letter-spacing:0.5px;
-  }
-  input[type="text"]:focus{
-    border-color:var(--red);
-    box-shadow:0 0 0 3px rgba(255,77,77,0.15);
-  }
-  .error{
-    color:var(--red);
-    font-size:11.5px;
-    margin-top:10px;
-    min-height:16px;
-    opacity:0;
-    transition:opacity .2s;
-  }
-  .error.show{opacity:1;}
-  .shake{animation:shake .4s;}
-  @keyframes shake{
-    10%,90%{transform:translateX(-2px);}
-    20%,80%{transform:translateX(4px);}
-    30%,50%,70%{transform:translateX(-8px);}
-    40%,60%{transform:translateX(8px);}
-  }
-
-  button{
-    font-family:inherit;
-    cursor:pointer;
-  }
-  .btn{
-    margin-top:18px;
-    width:100%;
-    padding:13px 14px;
-    background:transparent;
-    border:1px solid var(--red);
-    color:var(--red);
-    border-radius:6px;
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:0.4px;
-    transition:all .15s;
-  }
-  .btn:hover{background:rgba(255,77,77,0.1);}
-  .btn.gold{border-color:var(--gold); color:var(--gold);}
-  .btn.gold:hover{background:rgba(255,181,69,0.12);}
-  .btn:disabled{opacity:0.35; cursor:not-allowed;}
-
-  .typewrite{
-    font-size:15px;
-    line-height:1.7;
-    color:var(--text);
-    min-height:80px;
-    text-align:left;
-    white-space:pre-wrap;
-  }
-  .cursor{display:inline-block; width:8px; background:var(--gold); animation:blink 1s step-start infinite;}
-  @keyframes blink{50%{opacity:0;}}
-
-  .options{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-    margin-top:18px;
-    text-align:left;
-  }
-  .opt{
-    border:1px solid var(--line);
-    background:#05070b;
-    color:var(--text);
-    padding:13px 14px;
-    border-radius:6px;
-    font-size:13.5px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-    transition:all .15s;
-  }
-  .opt:hover{border-color:var(--gold-dim);}
-  .opt.selected{
-    border-color:var(--gold);
-    background:rgba(255,181,69,0.08);
-    box-shadow:0 0 16px rgba(255,181,69,0.15);
-  }
-  .badge{
-    font-size:10px;
-    color:var(--muted);
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding:2px 6px;
-    letter-spacing:0.5px;
-  }
-  .prompt-label{
-    font-size:11px;
-    color:var(--gold);
-    letter-spacing:1px;
-    text-transform:uppercase;
-    margin-bottom:10px;
-    text-align:left;
-  }
-  .summary{
-    text-align:left;
-    font-size:13px;
-    line-height:2;
-    background:#05070b;
-    border:1px solid var(--line);
-    border-radius:6px;
-    padding:16px;
-    margin-top:16px;
-  }
-  .summary b{color:var(--gold);}
-  .heart{
-    font-size:30px;
-    margin-bottom:10px;
-    animation:pulse 1.4s ease-in-out infinite;
-  }
-  @keyframes pulse{0%,100%{transform:scale(1);} 50%{transform:scale(1.15);}}
-  .footer-sign{
-    margin-top:22px;
-    font-size:11px;
-    color:var(--muted);
-    letter-spacing:0.3px;
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para Andrea ❤️</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<canvas id="rain"></canvas>
+<canvas id="matrix"></canvas>
 
-<div class="stage">
-  <div class="window">
-    <div class="titlebar">
-      <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-      <div class="url" id="urlbar">feliz-aniversario.local</div>
+<div class="contenedor">
+
+  <!-- Pantalla 1 -->
+  <section id="pantalla1" class="tarjeta activa">
+
+    <div class="candado">🔒</div>
+
+    <h2>Esto se desbloquea con tu nombre ❤️</h2>
+
+    <input
+      id="nombre"
+      type="text"
+      placeholder="Escribe tu nombre"
+    >
+
+    <p class="pequeño">
+      Este mensaje es para ti.
+    </p>
+
+    <button id="btnEntrar">
+      Entrar
+    </button>
+
+  </section>
+
+  <!-- Pantalla 2 -->
+  <section id="pantalla2" class="tarjeta">
+
+    <h2>
+      ¿A qué hora puedes estar lista? ✨
+    </h2>
+
+    <div class="horas">
+
+      <label>
+        <input type="radio" name="hora" value="5 PM">
+        5 PM
+      </label>
+
+      <label>
+        <input type="radio" name="hora" value="6 PM">
+        6 PM
+      </label>
+
+      <label>
+        <input
+          type="radio"
+          name="hora"
+          value="7 PM"
+          checked
+        >
+        7 PM
+      </label>
+
+      <label>
+        <input type="radio" name="hora" value="8 PM">
+        8 PM
+      </label>
+
+      <label>
+        <input type="radio" name="hora" value="9 PM">
+        9 PM
+      </label>
+
     </div>
 
-    <!-- SCREEN 1: LOCK -->
-    <div class="screen active" id="screen-1">
-      <div class="lock-icon">🔒</div>
-      <h1>Esto se desbloquea con tu nombre</h1>
-      <p class="sub">Acceso restringido. Si no eres <span class="accent">tú</span>, este mensaje no es para ti.</p>
-      <input type="text" id="nameInput" placeholder="Escribe tu nombre" autocomplete="off">
-      <div class="error" id="lockError">Este mensaje no es para ti.</div>
-      <button class="btn" id="unlockBtn">▸ Entrar</button>
-    </div>
+    <button id="btnHora">
+      Confirmar hora
+    </button>
 
-    <!-- SCREEN 2: REVEAL -->
-    <div class="screen" id="screen-2">
-      <div class="prompt-label">&gt; acceso concedido</div>
-      <div class="typewrite" id="typeTarget"></div>
-      <button class="btn gold" id="toStep3" style="display:none;">Continuar ▸</button>
-    </div>
+  </section>
 
-    <!-- SCREEN 3: ACTIVITY CHOICE -->
-    <div class="screen" id="screen-3">
-      <h1>Feliz 1 año <span class="accent-gold">🎉</span></h1>
-      <p class="sub">Elige qué quieres que hagamos para celebrar:</p>
-      <div class="options" id="activityOptions">
-        <button class="opt" data-val="Cine">🎬 Cine <span class="badge">opción 1</span></button>
-        <button class="opt" data-val="Cena">🍝 Cena <span class="badge">opción 2</span></button>
-        <button class="opt" data-val="Pintura">🎨 Pintura <span class="badge">opción 3</span></button>
-        <button class="opt" data-val="Sorpresa (tú decides)">✨ Sorpresa, tú decides <span class="badge">opción 4</span></button>
+  <!-- Pantalla 3 -->
+  <section id="pantalla3" class="tarjeta">
+
+    <h2>
+      Feliz cumpleaños Andrea 🎂
+    </h2>
+
+    <h3>
+      Y haremos...
+    </h3>
+
+    <div id="ruleta">
+      <div id="actividad">
+        Presiona Girar
       </div>
-      <button class="btn gold" id="toStep4" disabled>Confirmar elección</button>
     </div>
 
-    <!-- SCREEN 4: TIME -->
-    <div class="screen" id="screen-4">
-      <div class="lock-icon" style="border-color:var(--gold); color:var(--gold); box-shadow:0 0 24px rgba(255,181,69,0.35);">⏰</div>
-      <h1>¿A qué hora quieres que pase por ti?</h1>
-      <p class="sub">Escribe la hora que prefieras, tú decides.</p>
-      <input type="text" id="timeInput" placeholder="Ej. 7:30pm">
-      <button class="btn gold" id="toStep5">Confirmar hora ▸</button>
+    <button id="btnGirar">
+      Girar
+    </button>
+
+  </section>
+
+  <!-- Pantalla Final -->
+  <section id="pantalla4" class="tarjeta">
+
+    <h2>
+      Ya eres hermosa,
+      pero estate lista a las
+      <span id="horaFinal"></span> ❤️
+    </h2>
+
+    <p>
+      📍 Dirección:
+      Tu casa (pasaré por ti 😌)
+    </p>
+
+    <img
+      src="assets/andrea.jpg"
+      class="foto"
+    >
+
+    <div class="contador">
+      ❤️ 391 días juntos ❤️
     </div>
 
-    <!-- SCREEN 5: FINAL -->
-    <div class="screen" id="screen-5">
-      <div class="heart">💛</div>
-      <h1>Todo listo</h1>
-      <p class="sub">Guardado en el sistema. Nos vemos pronto.</p>
-      <div class="summary">
-        <div>&gt; ocasión: <b>1er aniversario</b></div>
-        <div>&gt; plan: <b id="sumActivity"></b></div>
-        <div>&gt; hora: <b id="sumTime"></b></div>
-        <div>&gt; dirección: <b>paso por ti</b></div>
-      </div>
-      <div class="footer-sign">— con cariño, tu persona especial 💛</div>
+    <div class="carta">
+
+Andrea,
+
+Gracias por estos 391 días.
+
+Te has convertido en una de las personas más importantes de mi vida.
+
+Espero seguir creando recuerdos contigo, riendo juntos y celebrando muchos cumpleaños más.
+
+❤️ Feliz cumpleaños ❤️
+
+20/06/2006
+
     </div>
 
-  </div>
+  </section>
+
 </div>
 
-<script>
-// ---------- matrix rain background ----------
-const canvas = document.getElementById('rain');
-const ctx = canvas.getContext('2d');
-let w, h, cols, drops;
-const chars = "アイウエオカキクケコサシスセソ0123456789";
-function setup(){
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-  cols = Math.floor(w / 16);
-  drops = new Array(cols).fill(0);
-}
-setup();
-window.addEventListener('resize', setup);
-function drawRain(){
-  ctx.fillStyle = 'rgba(4,6,10,0.08)';
-  ctx.fillRect(0,0,w,h);
-  ctx.font = '14px monospace';
-  for(let i=0;i<cols;i++){
-    const char = chars[Math.floor(Math.random()*chars.length)];
-    const grad = Math.random() > 0.85 ? '#ffb545' : '#7a2323';
-    ctx.fillStyle = grad;
-    ctx.fillText(char, i*16, drops[i]*16);
-    if(drops[i]*16 > h && Math.random() > 0.975) drops[i] = 0;
-    drops[i]++;
-  }
-  requestAnimationFrame(drawRain);
-}
-drawRain();
+<script src="script.js"></script>
 
-// ---------- flow logic ----------
-const TARGET_NAME = "andrea";
-const screens = {
-  1: document.getElementById('screen-1'),
-  2: document.getElementById('screen-2'),
-  3: document.getElementById('screen-3'),
-  4: document.getElementById('screen-4'),
-  5: document.getElementById('screen-5'),
-};
-function goTo(n){
-  Object.values(screens).forEach(s => s.classList.remove('active'));
-  screens[n].classList.add('active');
-}
-
-const nameInput = document.getElementById('nameInput');
-const lockError = document.getElementById('lockError');
-const window1 = document.getElementById('screen-1');
-const urlbar = document.getElementById('urlbar');
-
-document.getElementById('unlockBtn').addEventListener('click', tryUnlock);
-nameInput.addEventListener('keydown', e => { if(e.key === 'Enter') tryUnlock(); });
-
-function tryUnlock(){
-  const val = nameInput.value.trim().toLowerCase();
-  if(val === TARGET_NAME){
-    urlbar.textContent = 'acceso-concedido.local';
-    goTo(2);
-    typeMessage();
-  } else {
-    lockError.classList.add('show');
-    window1.querySelector('.window') || null;
-    document.querySelector('.window').classList.add('shake');
-    setTimeout(()=> document.querySelector('.window').classList.remove('shake'), 400);
-  }
-}
-
-// typewriter effect
-const message = "Hoy cumplimos 1 año juntos.\n\nQuería crear algo distinto para\ndecírtelo, así que hackeé un\npoco de código solo para ti.\n\nVamos a celebrarlo como se debe.";
-const typeTarget = document.getElementById('typeTarget');
-function typeMessage(){
-  let i = 0;
-  typeTarget.innerHTML = '';
-  const cursor = document.createElement('span');
-  cursor.className = 'cursor';
-  cursor.textContent = '\u00A0';
-  function step(){
-    if(i <= message.length){
-      typeTarget.textContent = message.slice(0, i);
-      typeTarget.appendChild(cursor);
-      i++;
-      setTimeout(step, 22);
-    } else {
-      document.getElementById('toStep3').style.display = 'block';
-    }
-  }
-  step();
-}
-
-document.getElementById('toStep3').addEventListener('click', () => goTo(3));
-
-// activity selection
-let selectedActivity = null;
-const activityBtns = document.querySelectorAll('#activityOptions .opt');
-const toStep4Btn = document.getElementById('toStep4');
-activityBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    activityBtns.forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedActivity = btn.dataset.val;
-    toStep4Btn.disabled = false;
-  });
-});
-toStep4Btn.addEventListener('click', () => goTo(4));
-
-// time
-document.getElementById('toStep5').addEventListener('click', () => {
-  const t = document.getElementById('timeInput').value.trim();
-  document.getElementById('sumActivity').textContent = selectedActivity || 'sorpresa';
-  document.getElementById('sumTime').textContent = t || 'por confirmar';
-  goTo(5);
-});
-</script>
 </body>
 </html>
